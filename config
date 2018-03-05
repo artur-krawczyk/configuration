@@ -34,8 +34,12 @@ floating_modifier $mod
 bindsym $mod+Return exec $term
 
 bindsym $mod+c exec google-chrome
-bindsym $mod+p exec /home/artur/Downloads/pycharm-community-2017.3.3/bin/pycharm.sh
+bindsym $mod+p exec /opt/pycharm-community-2017.3.3/bin/pycharm.sh
 bindsym $mod+r exec ranger
+bindsym $mod+Shift+a exec postman
+bindsym $mod+Shift+s exec slack
+bindsym $mod+v exec /opt/viber/Viber
+bindsym $mod+t exec toptracker
 
 # kill focused window
 bindsym $mod+Shift+q kill 
@@ -94,8 +98,6 @@ bindsym $mod+minus exec --no-startup-id pactl set-sink-volume 0 -2%
 bindsym $mod+Shift+minus exec --no-startup-id pactl set-sink-volume 0 -5%
 bindsym $mod+Shift+m exec --no-startup-id pactl set-sink-mute 0 toggle
 
-
-
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
@@ -105,10 +107,14 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+a focus parent
 
+bindsym $mod+n move workspace to output left
+bindsym $mod+m move workspace to output right
+
 # focus the child container
 #bindsym $mod+d focus child
 
-set $workspace5 "5: Other"
+set $workspace4 "4: Viber"
+set $workspace5 "5: TopTracker"
 set $workspace6 "6: IDE"
 set $workspace7 "7: Terminal"
 set $workspace8 "8: Internet Browser"
@@ -119,7 +125,7 @@ set $workspace10 "10: Communication"
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
+bindsym $mod+4 workspace $workspace4
 bindsym $mod+5 workspace $workspace5
 bindsym $mod+6 workspace $workspace6
 bindsym $mod+7 workspace $workspace7
@@ -131,7 +137,7 @@ bindsym $mod+0 workspace $workspace10
 bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace 2
 bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+4 move container to workspace $workspace4
 bindsym $mod+Shift+5 move container to workspace $workspace5
 bindsym $mod+Shift+6 move container to workspace $workspace6
 bindsym $mod+Shift+7 move container to workspace $workspace7 
@@ -141,7 +147,10 @@ bindsym $5mod+Shift+0 move container to workspace $workspace10
 
 assign [class="jetbrains-pycharm-ce"] $workspace6
 assign [class="Google-chrome"] $workspace8
-
+assign [class="Slack"] $workspace10
+assign [class="ViberPC"] $workspace4
+assign [class="Postman"] $workspace9
+assign [class="TopTracker"] $workspace5
 
 
 # reload the configuration file
