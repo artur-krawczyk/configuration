@@ -2,7 +2,7 @@
 set $mod Mod4
 
 # Font for window titles. 
-font pango:monospace 8
+font pango:System San Francisco Display 8
 
 ########################
 #                      #
@@ -12,14 +12,33 @@ font pango:monospace 8
 
 set $term rxvt-unicode
 
+# workspace variables
+set $workspace4 "4: Viber"
+set $workspace5 "5: TopTracker"
+set $workspace6 "6: IDE"
+set $workspace7 "7: Terminal"
+set $workspace8 "8: Internet Browser"
+set $workspace9 "9: Postman"
+set $workspace10 "10: Communication"
+
+# colors for themes
+set $bg-color 			#2F343F
+set $inactive-bg-color  	#2F343F
+set $text-color 		#f3f4f5
+set $inactive-text-color 	#676E7D
+set $urgent-bg-color 		#E53935
+
 ##################################
 #                                #
 # Things to do at system startup #
 #                                #
 ##################################
-exec_always --no-startup-id setxkbmap -option caps:swapescape
-exec_always --no-startup-id xinput --disable 12
-exec_always --no-startup-id unclutter
+exec_always --no-startup-id setxkbmap -option caps:swapescape # swaps escape with tab for vim
+# exec_always --no-startup-id xinput --disable 13
+exec_always --no-startup-id unclutter # hides the mouse pointer
+exec_always feh --bg-scale /home/artur/Pictures/wallpaper.jpg # wallpaper file
+# compton for opacity
+exec_always compton 
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -33,24 +52,68 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec $term
 
-bindsym $mod+c exec google-chrome
-bindsym $mod+p exec /opt/pycharm-community-2017.3.3/bin/pycharm.sh
-bindsym $mod+r exec ranger
+bindsym $mod+a focus parent
 bindsym $mod+Shift+a exec postman
-bindsym $mod+Shift+s exec slack
-bindsym $mod+v exec /opt/viber/Viber
-bindsym $mod+t exec toptracker
+
+bindsym $mod+b exec firefox
+
+# reload i3 configuration file
+bindsym $mod+Shift+c reload 
+
+# run rofi as alternative to d_menu
+bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -width 100 -padding 300 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd" -font "System San Francisco Display 18" 
+
+bindsym $mod+e layout toggle split # toggle current split between vertical and horizontal
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'" 
+
+bindsym $mod+f fullscreen toggle
+
+bindsym $mod+h split h
+
+bindsym $mod+Shift+i resize shrink height 10 px or 10 ppt
+
+bindsym $mod+j focus left
+bindsym $mod+Shift+j move left
+
+bindsym $mod+k focus down
+bindsym $mod+Shift+k move down
+
+bindsym $mod+l focus up
+bindsym $mod+Shift+l move up
+
+bindsym $mod+m move workspace to output right
+bindsym $mod+Shift+m exec --no-startup-id pactl set-sink-mute 0 toggle
+
+bindsym $mod+n move workspace to output left
+
+bindsym $mod+Shift+o resize grow height 10 px or 10 ppt
+
+bindsym $mod+p exec pycharm-community
+bindsym $mod+Shift+p resize grow width 10 px or 10 ppt
 
 # kill focused window
 bindsym $mod+Shift+q kill 
 
-bindsym $mod+d exec dmenu_run # start dmenu (a program launcher)
+# run ranger file manager
+bindsym $mod+r exec ranger 
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart 
 
-# change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
+bindsym $mod+s layout stacking
+bindsym $mod+Shift+s exec slack
+
+bindsym $mod+Shift+u resize shrink width 10 px or 10 ppt
+
+bindsym $mod+v split v
+bindsym $mod+Shift+v exec /opt/viber/Viber
+
+bindsym $mod+w layout tabbed
+
 bindsym $mod+semicolon focus right
+bindsym $mod+Shift+semicolon move right
+
+bindsym $mod+apostrophe workspace next
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -58,68 +121,22 @@ bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
-
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# split in horizontal orientation
-bindsym $mod+Shift+h split h
+bindsym $mod+plus exec --no-startup-id amixer -D pulse sset Master 2%+
+bindsym $mod+Shift+plus exec --no-startup-id amixer -D pulse sset Master 5%+
 
-# split in vertical orientation
-bindsym $mod+Shift+v split v
-
-# enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
-
-# change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
-
-bindsym $mod+Shift+u resize shrink width 10 px or 10 ppt
-bindsym $mod+Shift+i resize shrink height 10 px or 10 ppt
-bindsym $mod+Shift+o resize grow height 10 px or 10 ppt
-bindsym $mod+Shift+p resize grow width 10 px or 10 ppt
-
-bindsym $mod+h workspace prev
-bindsym $mod+apostrophe workspace next
-
-bindsym $mod+plus exec --no-startup-id pactl set-sink-volume 0 +2%
-bindsym $mod+Shift+plus exec --no-startup-id pactl set-sink-volume 0 +5%
-bindsym $mod+minus exec --no-startup-id pactl set-sink-volume 0 -2%
-bindsym $mod+Shift+minus exec --no-startup-id pactl set-sink-volume 0 -5%
-bindsym $mod+Shift+m exec --no-startup-id pactl set-sink-mute 0 toggle
-
-# toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+minus exec --no-startup-id amixer -D pulse sset Master 2%-
+bindsym $mod+Shift+minus exec --no-startup-id amixer -D pulse sset Master 5%-
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
-
-# focus the parent container
-bindsym $mod+a focus parent
-
-bindsym $mod+n move workspace to output left
-bindsym $mod+m move workspace to output right
-
-# focus the child container
-#bindsym $mod+d focus child
-
-set $workspace4 "4: Viber"
-set $workspace5 "5: TopTracker"
-set $workspace6 "6: IDE"
-set $workspace7 "7: Terminal"
-set $workspace8 "8: Internet Browser"
-set $workspace9 "9: Postman"
-set $workspace10 "10: Communication"
+bindsym $mod+space focus mode_toggle 
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle 
 
 # switch to workspace
 bindsym $mod+1 workspace 1
@@ -143,22 +160,14 @@ bindsym $mod+Shift+6 move container to workspace $workspace6
 bindsym $mod+Shift+7 move container to workspace $workspace7 
 bindsym $mod+Shift+8 move container to workspace $workspace8
 bindsym $mod+Shift+9 move container to workspace $workspace9
-bindsym $5mod+Shift+0 move container to workspace $workspace10
+bindsym $mod+Shift+0 move container to workspace $workspace10
 
 assign [class="jetbrains-pycharm-ce"] $workspace6
-assign [class="Google-chrome"] $workspace8
+assign [class="Firefox"] $workspace8
 assign [class="Slack"] $workspace10
 assign [class="ViberPC"] $workspace4
 assign [class="Postman"] $workspace9
 assign [class="TopTracker"] $workspace5
-
-
-# reload the configuration file
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -184,12 +193,26 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
-# bindsym $mod+r mode "resize" - currently used by ranger application
+#window colors
+#			border			background		text			indicator
+client.focused		$bg-color		$bg-color		$text-color		$bg-color
+client.unfocused	$interactive-bg-color	$interactive-bg-color	$interactive-text-color	$bg-color
+client.focused_inactive	$interactive-bg-color	$interactive-bg-color	$interactive-text-color	$bg-color
+client.urgent		$urgent-bg-color	$urgent-bg-color	$text-color		$bg-colo
+
+hide_edge_borders both
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+    position bottom
+    status_command i3blocks -c ~/.i3/i3blocks.conf
+    colors {
+        background $bg-color
+        separator #757575
+        #                   border              background          text
+        focused_workspace   $bg-color           $bg-color           $text-color
+        inactive_workspace  $inactive-bg-color  $inactive-bg-color  $inactive-text-color
+        urgent_workspace    $urgent-bg-color    $urgent-bg-color    $text-color
+    }
 }
-
-exec_always feh --bg-scale /home/artur/Pictures/wallpaper.jpg
