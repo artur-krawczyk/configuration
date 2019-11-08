@@ -2,7 +2,7 @@
 set $mod Mod4
 
 # Font for window titles. 
-font pango:System San Francisco Display 8
+font pango:System San Francisco Display 12
 
 ########################
 #                      #
@@ -13,18 +13,18 @@ font pango:System San Francisco Display 8
 set $term rxvt-unicode
 
 # workspace variables
-set $workspace4 "4: Viber"
-set $workspace5 "5: TopTracker"
+set $workspace3 "3: Misc"
+set $workspace4 "4: PDF"
 set $workspace6 "6: IDE"
 set $workspace7 "7: Terminal"
 set $workspace8 "8: Internet Browser"
-set $workspace9 "9: Postman"
+set $workspace9 "9: Music"
 set $workspace10 "10: Communication"
 
 # colors for themes
-set $bg-color 			#2F343F
+set $bg-color 			    #2F343F
 set $inactive-bg-color  	#2F343F
-set $text-color 		#f3f4f5
+set $text-color 		    #f3f4f5
 set $inactive-text-color 	#676E7D
 set $urgent-bg-color 		#E53935
 
@@ -36,7 +36,8 @@ set $urgent-bg-color 		#E53935
 exec_always --no-startup-id setxkbmap -option caps:swapescape # swaps escape with tab for vim
 # exec_always --no-startup-id xinput --disable 13
 exec_always --no-startup-id unclutter # hides the mouse pointer
-exec_always feh --bg-scale /home/artur/Pictures/wallpaper.jpg # wallpaper file
+exec_always feh --bg-scale /home/artur/Pictures/mountain.jpg # wallpaper file
+exec_always xgamma -gamma 0.75
 # compton for opacity
 exec_always compton 
 
@@ -51,6 +52,7 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec $term
+bindsym $mod+t exec $term
 
 bindsym $mod+a focus parent
 bindsym $mod+Shift+a exec postman
@@ -83,7 +85,7 @@ bindsym $mod+l focus up
 bindsym $mod+Shift+l move up
 
 bindsym $mod+m move workspace to output right
-bindsym $mod+Shift+m exec --no-startup-id pactl set-sink-mute 0 toggle
+bindsym $mod+Shift+m exec amixer -D pulse set Master 1+ toggle
 
 bindsym $mod+n move workspace to output left
 
@@ -101,7 +103,7 @@ bindsym $mod+r exec ranger
 bindsym $mod+Shift+r restart 
 
 bindsym $mod+s layout stacking
-bindsym $mod+Shift+s exec slack
+bindsym $mod+Shift+s exec spotify
 
 bindsym $mod+Shift+u resize shrink width 10 px or 10 ppt
 
@@ -113,7 +115,9 @@ bindsym $mod+w layout tabbed
 bindsym $mod+semicolon focus right
 bindsym $mod+Shift+semicolon move right
 
+bindsym $mod+Tab workspace next
 bindsym $mod+apostrophe workspace next
+bindsym $mod+Shift+apostrophe workspace previous
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -141,9 +145,9 @@ bindsym $mod+Shift+space floating toggle
 # switch to workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
+bindsym $mod+3 workspace $workspace3
 bindsym $mod+4 workspace $workspace4
-bindsym $mod+5 workspace $workspace5
+bindsym $mod+5 workspace 5
 bindsym $mod+6 workspace $workspace6
 bindsym $mod+7 workspace $workspace7
 bindsym $mod+8 workspace $workspace8
@@ -153,21 +157,21 @@ bindsym $mod+0 workspace $workspace10
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+3 move container to workspace $workspace3
 bindsym $mod+Shift+4 move container to workspace $workspace4
-bindsym $mod+Shift+5 move container to workspace $workspace5
+bindsym $mod+Shift+5 move container to workspace 5
 bindsym $mod+Shift+6 move container to workspace $workspace6
 bindsym $mod+Shift+7 move container to workspace $workspace7 
 bindsym $mod+Shift+8 move container to workspace $workspace8
 bindsym $mod+Shift+9 move container to workspace $workspace9
 bindsym $mod+Shift+0 move container to workspace $workspace10
 
+assign [class="TopTracker"] $workspace3
+assign [class="Evince"] $workspace4
 assign [class="jetbrains-pycharm-ce"] $workspace6
 assign [class="Firefox"] $workspace8
+assign [class="Spotify"] $workspace9
 assign [class="Slack"] $workspace10
-assign [class="ViberPC"] $workspace4
-assign [class="Postman"] $workspace9
-assign [class="TopTracker"] $workspace5
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -194,11 +198,11 @@ mode "resize" {
 }
 
 #window colors
-#			border			background		text			indicator
-client.focused		$bg-color		$bg-color		$text-color		$bg-color
-client.unfocused	$interactive-bg-color	$interactive-bg-color	$interactive-text-color	$bg-color
-client.focused_inactive	$interactive-bg-color	$interactive-bg-color	$interactive-text-color	$bg-color
-client.urgent		$urgent-bg-color	$urgent-bg-color	$text-color		$bg-colo
+#			            border			    background		    text			        indicator
+client.focused		    $bg-color		    $bg-color		    $text-color		        $bg-color
+client.unfocused	    $inactive-bg-color	$inactive-bg-color	$inactive-text-color	$bg-color
+client.focused_inactive	$inactive-bg-color	$inactive-bg-color	$inactive-text-color	$bg-color
+client.urgent		    $urgent-bg-color	$urgent-bg-color	$text-color		        $bg-color
 
 hide_edge_borders both
 
